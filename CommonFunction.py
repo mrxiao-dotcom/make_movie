@@ -211,3 +211,33 @@ def copy_outmp4_and_rename_files(source_dir, target_dir):
             if not os.path.exists(target_file):
                 shutil.copy(source_file, target_file)
                 print(f'Copied and renamed {filename} to {target_file}')
+
+
+def delete_files_in_directory(directory, exclude_files=None):
+    # 如果没有提供排除文件列表，则创建一个空列表
+    if exclude_files is None:
+        exclude_files = []
+
+    # 检查目录是否存在
+    if not os.path.exists(directory):
+        print("目录不存在。")
+        return
+
+    # 遍历目录中的所有文件和子目录
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+
+        # 判断文件是否需要被排除
+        if filename in exclude_files:
+            print(f"文件 {filename} 被排除，跳过删除。")
+            continue
+
+        # 判断是文件还是目录
+        if os.path.isfile(file_path) or os.path.islink(file_path):
+            # 删除文件或链接
+            os.remove(file_path)
+            print(f"已删除文件：{file_path}")
+        elif os.path.isdir(file_path):
+            # 如果是目录，则递归删除
+            shutil.rmtree(file_path)
+            print(f"已删除目录：{file_path}")

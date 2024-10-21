@@ -3,11 +3,26 @@ from 助手 import *
 from CommonFunction import *
 import subprocess
 
+#基础文件路径
 
+file_dir = f"文档集合"
+audio_dir = f"声音"
+pic_dir = f"图片"
+movie_dir = f"视频"
+dst_dir = f'F:\AI\PicToMovie\in'
+
+auto_init = True #如果需要自动初始化，那么只需要修改这个标志即可
+if auto_init:
+    delete_files_in_directory(file_dir)
+    delete_files_in_directory(audio_dir)
+    delete_files_in_directory(pic_dir,"src1.png")
+    delete_files_in_directory(movie_dir)
+    delete_files_in_directory(dst_dir)
+    print("删除工作目录成功")
 #说明,步骤1：对话视频制作，负责生成所有的视频，前提是删除所有图片、声音、临时视频、视频的内容
 #在图片文件夹中，把要做视频的原图：src1.png放进去，脸部一定要清晰可见
 
-output_file_path = f"文档集合/对话文案.txt"
+output_file_path = f"{file_dir}/对话文案.txt"
 if not 是否存在(output_file_path):
     read_and_convert_to_json(f"原文.txt",output_file_path)
 
@@ -35,7 +50,7 @@ for index, conversation in enumerate(conversations):
     student_ask_list.append(f"{index+1}-学生-{标题}")
 
 #对口型基材文件夹
-dst_dir = f'F:\AI\PicToMovie\in'
+
 
 student_pic_path = f"图片/src1.png"
 
